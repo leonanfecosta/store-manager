@@ -1,13 +1,10 @@
 const { Router } = require('express');
 
 const route = Router();
+const productsController = require('../controllers/productsController');
 
-route.get('/', (_request, response) => { 
-  response.json({ message: 'Hello World' });
-});
+route.get('/', productsController.getAllProducts);
 
-route.get('/:id', (_request, response) => { 
-  response.json({ message: 'Hello World com ID' });
-});
+route.get('/:id', productsController.getProductById);
 
 module.exports = route;
