@@ -78,7 +78,7 @@ describe("productsService", () => {
         };
         Sinon.stub(productsModel, "getProductById").resolves(resultExecute);
 
-        const result = await productsModel.getProductById(1);
+        const result = await productsService.getProductById(1);
         expect(result).to.be.an("object");
       });
 
@@ -89,7 +89,7 @@ describe("productsService", () => {
       };
       Sinon.stub(productsModel, "getProductById").resolves(resultExecute);
 
-      const result = await productsModel.getProductById(1);
+      const result = await productsService.getProductById(1);
       expect(result).to.be.an("object");
       expect(result).to.have.all.keys("id", "name");
       expect(result.id).to.equal(1);
