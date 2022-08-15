@@ -16,14 +16,15 @@ const productsController = {
   },
 
   createProduct: async (req, res) => {
-    try {
-      const { name } = req.body;
-      const product = await productsService.createProduct(name);
-      return res.status(201).json(product);
-    } catch (error) { 
-      console.log(error);
-      return res.status(500).json({ message: error.message });
+    const { name } = req.body;
+    const { data, code } = await productsService.createProduct(name);
+    if (code === 400) {
+      return res.status(code).json({ message: data });
     }
+    if (code === 422) {
+      return res.status(code).json({ message: data });
+    }
+    return res.status(code).json(data);
   },
 };
 
