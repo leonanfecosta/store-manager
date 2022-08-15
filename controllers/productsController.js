@@ -14,6 +14,17 @@ const productsController = {
     }
     return res.status(200).json(product);
   },
+
+  createProduct: async (req, res) => {
+    try {
+      const { name } = req.body;
+      const product = await productsService.createProduct(name);
+      return res.status(201).json(product);
+    } catch (error) { 
+      console.log(error);
+      return res.status(500).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = productsController;

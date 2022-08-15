@@ -10,6 +10,11 @@ const productsService = {
     const product = await productsModel.getProductById(id);
     return product;
   },
+
+  createProduct: async (name) => {
+    const product = await productsModel.createProduct(name);
+    return product;
+  },
 };
 
 module.exports = productsService;
