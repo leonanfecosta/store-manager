@@ -101,4 +101,41 @@ describe("productsModel", () => {
       expect(result.name).to.equal("Martelo de Thor");
     })
   });
+
+  describe("createProduct", () => {
+    afterEach(() => {
+      Sinon.restore();
+    });
+
+    it("deve retornar um objeto", async () => {
+      const resultExecute = [{
+        fieldCount: 0,
+        affectedRows: 1,
+        insertId: 1,
+        info: '',
+        serverStatus: 2,
+        warningStatus: 0
+      }];
+      Sinon.stub(connection, "execute").resolves([resultExecute]);
+
+      const result = await productsModel.createProduct("ProdutoX");
+      expect(result).to.be.an("object");
+    });
+
+    it("deve criar um produto", async () => {
+      const resultExecute = [{
+        fieldCount: 0,
+        affectedRows: 1,
+        insertId: 1,
+        info: '',
+        serverStatus: 2,
+        warningStatus: 0
+      }];
+      Sinon.stub(connection, "execute").resolves([resultExecute]);
+
+      const result = await productsModel.createProduct("ProdutoX");
+      expect(result).to.all.keys('id', 'name');
+      expect(result.name).to.equal("ProdutoX");
+    });
+  });
 });

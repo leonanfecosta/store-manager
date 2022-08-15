@@ -96,4 +96,46 @@ describe("productsService", () => {
       expect(result.name).to.equal("Martelo de Thor");
     });
   });
+
+  describe("createProduct", () => {
+    afterEach(() => {
+      Sinon.restore();
+    });
+
+    it("retorna um erro 400 se não for passado o nome", async () => {
+      const result = { name: "" };
+      Sinon.stub(productsModel, "createProduct").resolves(result);
+
+      const resultExecute = await productsService.createProduct("");
+      expect(resultExecute).to.be.an("object");
+      expect(resultExecute).to.have.all.keys("data", "code");
+      expect(resultExecute.code).to.equal(400);
+      expect(resultExecute.data).to.equal('"name" is required');
+    });
+
+    it("retorna um erro 422 se o nome passado tiver menos que 5 caracteres", async () => {
+      const result = { name: "Prod" };
+      Sinon.stub(productsModel, "createProduct").resolves(result);
+
+      const resultExecute = await productsService.createProduct("Prod");
+      expect(resultExecute).to.be.an("object");
+      expect(resultExecute).to.have.all.keys("data", "code");
+      expect(resultExecute.code).to.equal(422);
+      expect(resultExecute.data).to.equal(
+        '"name" length must be at least 5 characters long'
+      );
+    });
+
+    it("retorna status 201 sucesso", async () => {
+      const result = { name: "ProdutoX" };
+      Sinon.stub(productsModel, "createProduct").resolves(result);
+
+      const resultExecute = await productsService.createProduct("ProdutoX");
+
+      expect(resultExecute).to.be.an("object");
+      expect(resultExecute).to.have.all.keys("data", "code");
+      expect(resultExecute.code).to.equal(201);
+      expect(resultExecute.data.name).to.equal("ProdutoX");
+     });
+  });
 });

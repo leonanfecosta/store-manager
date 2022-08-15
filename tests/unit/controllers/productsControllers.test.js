@@ -76,7 +76,77 @@ describe("productsControllers", () => {
       await productsController.getProductById(request, response);
 
       expect(response.status.calledWith(404)).to.be.equal(true);
-      expect(response.json.calledWith({ message: "Product not found" })).to.be.equal(true);
+      expect(
+        response.json.calledWith({ message: "Product not found" })
+      ).to.be.equal(true);
+    });
+  });
+
+  describe("createProduct", () => {
+    afterEach(() => {
+      Sinon.restore();
+    });
+
+    it("retorna o produto com o status 201", async () => {
+      const request = {};
+      const response = {};
+
+      request.body = { name: "ProdutoX" };
+      response.status = Sinon.stub().returns(response);
+      response.json = Sinon.stub().returns();
+      Sinon.stub(productsService, "createProduct").resolves({
+        code: 201,
+        data: { id: 1, name: "ProdutoX" },
+      });
+
+      await productsController.createProduct(request, response);
+
+      expect(response.status.calledWith(201)).to.be.equal(true);
+      expect(response.json.calledWith({ id: 1, name: "ProdutoX" })).to.be.equal(
+        true
+      );
+    });
+
+    it("retorna erro 400 quando o nome do produto nao é passado", async () => {
+      const request = {};
+      const response = {};
+
+      request.body = {};
+      response.status = Sinon.stub().returns(response);
+      response.json = Sinon.stub().returns();
+      Sinon.stub(productsService, "createProduct").resolves({
+        code: 400,
+        data: '"name" is required',
+      });
+
+      await productsController.createProduct(request, response);
+
+      expect(response.status.calledWith(400)).to.be.equal(true);
+      expect(
+        response.json.calledWith({ message: '"name" is required' })
+      ).to.be.equal(true);
+    });
+
+    it("retorna erro 422 caso o produto tenha menos que 5 caracteres", async () => {
+      const request = {};
+      const response = {};
+
+      request.body = { name: "Prod" };
+      response.status = Sinon.stub().returns(response);
+      response.json = Sinon.stub().returns();
+      Sinon.stub(productsService, "createProduct").resolves({
+        code: 422,
+        data: '"name" length must be at least 5 characters long',
+      });
+
+      await productsController.createProduct(request, response);
+
+      expect(response.status.calledWith(422)).to.be.equal(true);
+      expect(
+        response.json.calledWith({
+          message: '"name" length must be at least 5 characters long',
+        })
+      ).to.be.equal(true);
     });
   });
 });
