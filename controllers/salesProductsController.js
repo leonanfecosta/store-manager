@@ -15,6 +15,23 @@ const salesProductsController = {
     }
     res.status(code).json(data);
   },
+
+  getAllSalesProducts: async (req, res) => {
+    const { code, data } = await salesProductsService.getAllSalesProducts();
+    if (code === 404) {
+      return res.status(code).json({ message: data });
+    }
+    res.status(code).json(data);
+  },
+
+  getSalesProductsBySaleId: async (req, res) => {
+    const { id } = req.params;
+    const { code, data } = await salesProductsService.getSalesProductsBySaleId(id);
+    if (code === 404) {
+      return res.status(code).json({ message: data });
+    }
+    res.status(code).json(data);
+  },
 };
 
 module.exports = salesProductsController;

@@ -32,7 +32,9 @@ const salesProductsService = {
     const inputValidation = await salesProductsService.bodyValidation(sales);
     if (inputValidation) return inputValidation;
 
-    const productsValidation = await salesProductsService.productsValidation(sales);
+    const productsValidation = await salesProductsService.productsValidation(
+      sales,
+    );
     if (productsValidation) return productsValidation;
 
     const id = await salesModel.createSale();
@@ -46,6 +48,26 @@ const salesProductsService = {
       }),
     );
     return { data: { id, itemsSold: sales }, code: 201 };
+  },
+
+  getAllSalesProducts: async () => {
+    const sales = await salesProductsModel.getAllSalesProducts();
+
+    if (!sales || sales.length === 0) {
+      return { code: 404, data: 'Sale not found' };
+    }
+
+    return { data: sales, code: 200 };
+  },
+
+  getSalesProductsBySaleId: async (id) => {
+    const sales = await salesProductsModel.getSalesProductsBySaleId(id);
+
+    if (!sales || sales.length === 0) {
+      return { code: 404, data: 'Sale not found' };
+    }
+
+    return { data: sales, code: 200 };
   },
 };
 
