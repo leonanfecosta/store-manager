@@ -18,9 +18,6 @@ const salesProductsController = {
 
   getAllSalesProducts: async (req, res) => {
     const { code, data } = await salesProductsService.getAllSalesProducts();
-    if (code === 404) {
-      return res.status(code).json({ message: data });
-    }
     res.status(code).json(data);
   },
 

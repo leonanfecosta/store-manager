@@ -88,4 +88,55 @@ describe("salesProductsService", () => {
       expect(result.code).to.be.equal(404);
     });
   });
+
+  describe("getAllSalesProducts", () => { 
+    afterEach(() => { 
+      Sinon.restore();
+    });
+
+    it("deve retornar um objeto com data e code 200", async () => {
+      const sales = [{ date: "2020-01-01", productId: 1, quantity: 1 }];
+      Sinon.stub(salesProductModel, "getAllSalesProducts").resolves(sales);
+      const result = await salesProductsService.getAllSalesProducts();
+      expect(result).to.be.an("object");
+      expect(result).to.all.keys("data", "code");
+      expect(result.data).to.be.an("array");
+      expect(result.data[0]).to.be.an("object");
+      expect(result.data[0]).to.all.keys("date", "productId", "quantity");
+      expect(result.data[0].date).to.be.a("string");
+      expect(result.data[0].productId).to.be.a("number");
+      expect(result.data[0].quantity).to.be.a("number");
+      expect(result.code).to.be.equal(200);
+    });
+  });
+
+  describe("getSalesProductsBySaleId", () => { 
+    afterEach(() => { 
+      Sinon.restore();
+    });
+
+    it("deve retornar um objeto com data e code 200", async () => { 
+      const sales = [{ date: "2020-01-01", productId: 1, quantity: 1 }];
+      Sinon.stub(salesProductModel, "getSalesProductsBySaleId").resolves(sales);
+      const result = await salesProductsService.getSalesProductsBySaleId(1);
+      expect(result).to.be.an("object");
+      expect(result).to.all.keys("data", "code");
+      expect(result.data).to.be.an("array");
+      expect(result.data[0]).to.be.an("object");
+      expect(result.data[0]).to.all.keys("date", "productId", "quantity");
+      expect(result.data[0].date).to.be.a("string");
+      expect(result.data[0].productId).to.be.a("number");
+      expect(result.data[0].quantity).to.be.a("number");
+      expect(result.code).to.be.equal(200);
+    });
+
+    it("deve retornar code 404 se a venda nao existir", async () => { 
+      Sinon.stub(salesProductModel, "getSalesProductsBySaleId").resolves(undefined);
+      const result = await salesProductsService.getSalesProductsBySaleId(1);
+      expect(result).to.be.an("object");
+      expect(result).to.all.keys("data", "code");
+      expect(result.data).to.be.equal("Sale not found");
+      expect(result.code).to.be.equal(404);
+    });
+  });
 });

@@ -92,7 +92,7 @@ describe("salesProductsController", () => {
       ).to.be.true;
     });
 
-    it('deve retornar status 404 e mensagem de erro quando o produto não existe', async () => { 
+    it("deve retornar status 404 e mensagem de erro quando o produto não existe", async () => {
       afterEach(() => {
         Sinon.restore();
       });
@@ -116,7 +116,91 @@ describe("salesProductsController", () => {
 
       await salesProductsController.createSaleProduct(request, response);
       expect(response.status.calledWith(404)).to.be.true;
-      expect(response.json.calledWith({ message: "Product not found" })).to.be.true;
+      expect(response.json.calledWith({ message: "Product not found" })).to.be
+        .true;
+    });
+  });
+
+  describe("getAllSalesProducts", () => {
+    afterEach(() => {
+      Sinon.restore();
+    });
+
+    it("deve retornar status 200 e todos os produtos", async () => {
+      const request = {};
+      const response = {};
+      response.status = Sinon.stub().returns(response);
+      response.json = Sinon.stub().returns();
+
+      const result = [
+        {
+          saleId: 1,
+          date: "2022-08-17T21:42:53.000Z",
+          productId: 1,
+          quantity: 5,
+        },
+      ];
+
+      Sinon.stub(salesProductsService, "getAllSalesProducts").resolves({
+        data: result,
+        code: 200,
+      });
+
+      await salesProductsController.getAllSalesProducts(request, response);
+      expect(response.status.calledWith(200)).to.be.true;
+      expect(response.json.calledWith(result)).to.be.true;
+    });
+  });
+
+  describe("getSalesProductsBySaleId", () => {
+    afterEach(() => {
+      Sinon.restore();
+    });
+
+    it("deve retornar status 200 e o produto", async () => {
+      const request = {};
+      const response = {};
+      response.status = Sinon.stub().returns(response);
+      response.json = Sinon.stub().returns();
+      request.params = { id: 1 };
+      const result = [
+        {
+          date: "2022-08-17T21:42:53.000Z",
+          productId: 1,
+          quantity: 5,
+        },
+      ];
+
+      Sinon.stub(salesProductsService, "getSalesProductsBySaleId").resolves({
+        data: result,
+        code: 200,
+      });
+
+      await salesProductsController.getSalesProductsBySaleId(request, response);
+      expect(response.status.calledWith(200)).to.be.true;
+      expect(response.json.calledWith(result)).to.be.true;
+    });
+
+    it("deve retornar status 404 e mensagem de erro quando o produto não existe", async () => { 
+      afterEach(() => {
+        Sinon.restore();
+      });
+
+      const request = {};
+      const response = {};
+      response.status = Sinon.stub().returns(response);
+      response.json = Sinon.stub().returns();
+      request.params = { id: 1 };
+
+      Sinon.stub(salesProductsService, "getSalesProductsBySaleId").resolves({
+        code: 404,
+        data: "Sale not found",
+      });
+
+      await salesProductsController.getSalesProductsBySaleId(request, response);
+      expect(response.status.calledWith(404)).to.be.true;
+      expect(response.json.calledWith({ message: "Sale not found" })).to.be
+        .true;
     });
   });
 });

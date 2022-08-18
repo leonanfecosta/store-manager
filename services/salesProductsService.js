@@ -52,11 +52,6 @@ const salesProductsService = {
 
   getAllSalesProducts: async () => {
     const sales = await salesProductsModel.getAllSalesProducts();
-
-    if (!sales || sales.length === 0) {
-      return { code: 404, data: 'Sale not found' };
-    }
-
     return { data: sales, code: 200 };
   },
 

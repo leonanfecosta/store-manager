@@ -29,4 +29,34 @@ describe('salesProductModel', () => {
     expect(result).to.be.true;
   }
   );
+
+  describe('getAllSalesProducts', () => { 
+    afterEach(() => { 
+      Sinon.restore();
+    });
+
+    it('deve retornar um array com as vendas', async () => { 
+      const sales = [{ saleId: 1, date: '2020-01-01', productId: 1, quantity: 1 }];
+      Sinon.stub(connection, "execute").resolves([sales]);
+      const result = await salesProductModel.getAllSalesProducts();
+      expect(result).to.be.an('array');
+      expect(result).to.be.equal(sales);
+
+    });  
+  });
+
+  describe('getSalesProductsBySaleId', () => { 
+    afterEach(() => { 
+      Sinon.restore();
+    });
+
+    it('deve retornar um array com as vendas com id especifico', async () => { 
+      const sales = [{ date: '2020-01-01', productId: 1, quantity: 1 }];
+      Sinon.stub(connection, "execute").resolves([sales]);
+      const result = await salesProductModel.getSalesProductsBySaleId(1);
+      expect(result).to.be.an('array');
+      expect(result).to.be.equal(sales);
+
+    });
+  });
 });
