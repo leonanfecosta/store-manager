@@ -26,6 +26,22 @@ const productsController = {
     }
     return res.status(code).json(data);
   },
+
+  updateProduct: async (req, res) => {
+    const { id } = req.params;
+    const { name } = req.body;
+    const { data, code } = await productsService.updateProduct(id, name);
+    if (code === 404) {
+      return res.status(code).json({ message: data });
+    }
+    if (code === 400) {
+      return res.status(code).json({ message: data });
+    }
+    if (code === 422) {
+      return res.status(code).json({ message: data });
+    }
+    return res.status(code).json(data);
+   },
 };
 
 module.exports = productsController;
