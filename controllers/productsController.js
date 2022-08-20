@@ -51,6 +51,16 @@ const productsController = {
     }
     return res.status(code).json(data);
   },
+
+  searchProduct: async (req, res) => { 
+    const { q: name } = req.query;
+    console.log(name);
+    const { data, code } = await productsService.searchProduct(name);
+    if (code === 404) {
+      return res.status(code).json({ message: data });
+    }
+    return res.status(code).json(data);
+  },
 };
 
 module.exports = productsController;

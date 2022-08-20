@@ -39,6 +39,15 @@ const productsModel = {
     );
     return affectedRows;
   },
+
+  searchProduct: async (name) => { 
+    const [products] = await connection.execute(
+      'SELECT * FROM StoreManager.products WHERE name LIKE ?',
+      [`%${name}%`],
+    );
+    console.log(products);
+    return products;
+  },
 };
 
 module.exports = productsModel;

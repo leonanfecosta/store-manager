@@ -49,6 +49,14 @@ const productsService = {
     }
     return { data: { id }, code: 204 };
   },
+
+  searchProduct: async (name) => { 
+    const products = await productsModel.searchProduct(name);
+    if (products.length === 0) {
+      return { data: 'Product not found', code: 404 };
+    }
+    return { data: products, code: 200 };
+  },
 };
 
 module.exports = productsService;
