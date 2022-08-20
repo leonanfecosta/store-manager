@@ -9,4 +9,6 @@ route.get('/', salesProductsController.getAllSalesProducts);
 
 route.get('/:id', salesProductsController.getSalesProductsBySaleId);
 
+route.delete('/:id', salesProductsController.deleteSaleProduct);
+
 module.exports = route;
