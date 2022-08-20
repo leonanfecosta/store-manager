@@ -36,7 +36,7 @@ const productsService = {
       };
     }
     const result = await productsModel.updateProduct(id, name);
-    if (result.affectedRows === 0) {
+    if (result === 0) {
       return { data: 'Product not found', code: 404 };
     }
     return { data: { id, name }, code: 200 };
