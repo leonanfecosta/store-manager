@@ -9,7 +9,7 @@ const salesProductModel = {
     return true;
   },
 
-  getAllSalesProducts: async () => { 
+  getAllSalesProducts: async () => {
     const query = `
       SELECT sale_id as saleId, date, product_id as productId, quantity
       FROM StoreManager.sales_products as sp
@@ -19,7 +19,7 @@ const salesProductModel = {
     return sales;
   },
 
-  getSalesProductsBySaleId: async (id) => { 
+  getSalesProductsBySaleId: async (id) => {
     const query = `
       SELECT 'date', product_id as productId, quantity
       FROM StoreManager.sales_products as sp
@@ -27,6 +27,15 @@ const salesProductModel = {
       WHERE sp.sale_id = ?`;
     const [sales] = await connection.execute(query, [id]);
     return sales;
+  },
+
+  updateSaleProduct: async (id, productId, quantity) => {
+    const query = `
+      UPDATE StoreManager.sales_products
+      SET quantity = ?
+      WHERE sale_id = ? AND product_id = ?`;
+    await connection.execute(query, [quantity, id, productId]);
+    return true;
   },
 };
 

@@ -65,12 +65,32 @@ const salesProductsService = {
     return { data: sales, code: 200 };
   },
 
-  deleteSaleProduct: async (id) => { 
+  deleteSaleProduct: async (id) => {
     const result = await salesModel.deleteSaleProduct(id);
     if (result === 0) {
       return { code: 404, data: 'Sale not found' };
     }
     return { code: 204 };
+  },
+
+  updateSaleProduct: async (id, sales) => {
+    const inputValidation = await salesProductsService.bodyValidation(sales);
+    if (inputValidation) return inputValidation;
+
+    const productsValidation = await salesProductsService.productsValidation(
+      sales,
+    );
+    if (productsValidation) return productsValidation;
+    
+    const verifySale = await salesProductsModel.getSalesProductsBySaleId(id);
+    if (!verifySale || verifySale.length === 0) {
+      return { code: 404, data: 'Sale not found' };
+    }
+
+    await Promise.all(sales.map(async (sale) => { 
+      await salesProductsModel.updateSaleProduct(id, sale.productId, sale.quantity);
+    }));
+    return { code: 200, data: { saleId: id, itemsUpdated: sales } };
   },
 };
 
