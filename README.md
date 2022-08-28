@@ -4,6 +4,22 @@
 
 Neste projeto desenvolvi uma API RESTful, com `Node.js` e `Express`, utilizando a arquitetura `MSC` (model-service-controller), onde é possível criar, visualizar, deletar e atualizar produtos e vendas `(CRUD)`, utilizando o banco de dados `MySQL` para a gestão de dados. Além disso, com o auxílio das ferramentas `Mocha`, `Chai` e `Sinon`, desenvolvi testes unitários a fim de verificar as funcionalidades da API.
 
+---
+
+### 🚀 Como executar o projeto
+
+_Pré-requisitos_
+
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
+[Git](https://git-scm.com),
+[Node.js](https://nodejs.org/en/).
+
+É recomendado utilizar algum cliente HTTP, como [Postman](https://www.postman.com/) ou o [Insomnia](https://insomnia.rest/download).
+
+Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
+
+---
+
 ## Orientações para a Execução:
 
 <details>
