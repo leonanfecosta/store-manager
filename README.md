@@ -2,7 +2,7 @@
 
 ## Sobre o projeto:
 
-Neste projeto desenvolvi uma API RESTful, com `Node.js` e `Express`, utilizando a arquitetura `MSC` (model-service-controller), sendo um sistema de gerenciamento de vendas no formato dropshipping onde é possível criar, visualizar, deletar e atualizar produtos e vendas `(CRUD)`, utilizando o banco de dados `MySQL` para a gestão de dados. Além disso, com o auxílio das ferramentas `Mocha`, `Chai` e `Sinon`, desenvolvi testes unitários a fim de verificar as funcionalidades da API. Para realizar a validação dos dados foi utilizado `Joi`. 
+Neste projeto desenvolvi uma API RESTful, com `Node.js` e `Express`, utilizando a arquitetura `MSC` (model-service-controller), onde é possível criar, visualizar, deletar e atualizar produtos e vendas `(CRUD)`, utilizando o banco de dados `MySQL` para a gestão de dados. Além disso, com o auxílio das ferramentas `Mocha`, `Chai` e `Sinon`, desenvolvi testes unitários a fim de verificar as funcionalidades da API.
 
 ## Orientações para a Execução:
 
